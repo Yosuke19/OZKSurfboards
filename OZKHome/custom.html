@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Surfboard Custom Order</title>
+   <!-- Tailwind CDN for styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.cleaned.css" />
+</head>
+<body class="text-black min-h-screen">
+  <header class="sticky top-0 backdrop-blur border-b border-black/10 header">
+    <div class="max-w-6xl mx-auto flex justify-between items-center p-4">
+      <h1 class="font-bold text-xl"><img src="Images/logos/OZK-Homepage-transparent.png" alt="ozksurfboards" width="250" height="150"/></h1>
+      <nav class="text-sm justify-content:center,">
+    <ul class="flex space-x-9 f2 my-text-color">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="models.html">Models</a></li>
+    <li><a href="custom.html">Custom Order</a></li>
+  </ul>
+</nav>
+    </div>
+  </header>
+  <style>
+    :root { --bg:#f7f7f8; --card:#ffffff; --ink:#111; --muted:#6b7280; --accent:#0ea5e9; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--ink); }
+    .wrap { max-width: 840px; margin: 24px auto; padding: 0 16px; }
+    .card { background: var(--card); border: 1px solid #e5e7eb; border-radius: 16px; padding: 20px; box-shadow: 0 6px 24px rgba(0,0,0,.04); }
+    h1 { margin: 0 0 6px; font-size: 1.6rem; }
+    p.sub { margin: 0 0 18px; color: var(--muted); }
+    fieldset { border: 0; padding: 0; margin: 18px 0; }
+    legend { font-weight: 700; margin-bottom: 10px; }
+    .grid { display: grid; gap: 12px; }
+    @media (min-width: 720px){ .grid.cols-2 { grid-template-columns: 1fr 1fr; } .grid.cols-3 { grid-template-columns: repeat(3, 1fr); } }
+    label { display: block; font-size: .92rem; margin-bottom: 6px; color: var(--muted); }
+    input[type="text"], input[type="email"], input[type="number"], select, textarea {
+      width: 100%; padding: 10px 12px; border: 1px solid #e5e7eb; border-radius: 10px; font: inherit; background: #fff;
+    }
+    input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    textarea { min-height: 90px; resize: vertical; }
+    .row { display:flex; gap:10px; align-items: end; }
+    .hint { font-size: .85rem; color: var(--muted); }
+    .pill { display:inline-block; padding: 6px 10px; background:#f1f5f9; border-radius:999px; font-size:.8rem; margin-left:8px; }
+    .total { background:#f8fafc; border:1px dashed #e5e7eb; border-radius:12px; padding:12px; display:flex; justify-content:space-between; align-items:center; }
+    .big { font-weight:800; font-size:1.3rem; }
+    .actions { display:flex; gap: 10px; margin-top: 16px; }
+    button {
+      appearance:none; border:0; padding:12px 16px; border-radius:12px; font-weight:700; cursor:pointer;
+    }
+    .primary { background: var(--accent); color:#fff; }
+    .ghost { background:#eef6ff; color:#0369a1; }
+    .req::after { content:" *"; color:#ef4444; }
+  </style>
+</head>
+<body>
+  <sectionsection class="hero py-8 bg-white">
+    <h1 class="text-3xl md:text-4xl mt-4 f2 centered-text" style="margin-bottom:56px;line-height:1.2;">
+      Custom Surfboard Order
+    </h1>
+  <div class="wrap">
+    <div class="card">
+      <p class="sub">Fill this out to start your build. We’ll confirm specs, timeline, and price by email.</p>
+
+      <form id="orderForm" onsubmit="handleSubmit(event)">
+        <!-- Contact -->
+        <fieldset>
+          <legend>Contact</legend>
+          <div class="grid cols-2">
+            <div>
+              <label for="name" class="req">Full name</label>
+              <input id="name" name="name" type="text" required autocomplete="name" />
+            </div>
+            <div>
+              <label for="email" class="req">Email</label>
+              <input id="email" name="email" type="email" required autocomplete="email" />
+            </div>
+          </div>
+          <div class="grid cols-2">
+            <div>
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="text" inputmode="tel" autocomplete="tel" />
+            </div>
+            <div>
+              <label for="city">City / Country</label>
+              <input id="city" name="city" type="text" autocomplete="address-level2" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Model / Build -->
+        <fieldset>
+          <legend>Board</legend>
+          <div class="grid cols-2">
+            <div>
+              <label for="model" class="req">Model</label>
+              <select id="model" name="model" required>
+                <option value="" selected disabled>Select a model</option>
+                <option>High Performance Shortboard</option>
+                <option>Twin Fish</option>
+                <option>Mid-Length</option>
+                <option>Longboard</option>
+                <option>Gun</option>
+              </select>
+            </div>
+            <div>
+              <label for="construction">Construction</label>
+              <select id="construction" name="construction">
+                <option>PU/Poly</option>
+                <option>EPS/Epoxy</option>
+                <option>Epoxy w/ Stringer</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid cols-3">
+            <div>
+              <label class="req">Length</label>
+              <div class="row">
+                <div style="flex:1">
+                  <label for="lenFt">Feet</label>
+                  <input id="lenFt" name="lenFt" type="number" min="4" max="12" step="1" value="6" required />
+                </div>
+                <div style="flex:1">
+                  <label for="lenIn">Inches</label>
+                  <input id="lenIn" name="lenIn" type="number" min="0" max="11" step="0.5" value="0" required />
+                </div>
+              </div>
+              <div class="hint">Example: 5′10″ → Feet: 5, Inches: 10</div>
+            </div>
+
+            <div>
+              <label for="width" class="req">Width (in)</label>
+              <input id="width" name="width" type="number" min="15" max="25" step="0.1" value="19.5" required />
+              <div class="hint">Across the widest point</div>
+            </div>
+
+            <div>
+              <label for="thickness" class="req">Thickness (in)</label>
+              <input id="thickness" name="thickness" type="number" min="1.5" max="4" step="0.01" value="2.5" required />
+              <div class="hint">Center thickness</div>
+            </div>
+          </div>
+
+          <div class="grid cols-2">
+            <div>
+              <label for="foil">Foil / Shape Factor</label>
+              <select id="foil" name="foil">
+                <option value="0.55">Shortboard (0.55)</option>
+                <option value="0.58" selected>Twin / Fish (0.58)</option>
+                <option value="0.52">Step-up / Gun (0.52)</option>
+                <option value="0.62">Fuller Mid / Log (0.62)</option>
+              </select>
+              <div class="hint">Used only for the volume estimate.</div>
+            </div>
+
+            <div class="total">
+              <div>
+                <div class="hint">Estimated Volume</div>
+                <div class="big"><span id="liters">—</span> L</div>
+              </div>
+              <span class="pill" id="dimsBadge">—″ × —″ × —″</span>
+            </div>
+          </div>
+
+          <div class="grid cols-2">
+            <div>
+              <label for="fins">Fin Setup</label>
+              <select id="fins" name="fins">
+                <option>Thruster (3)</option>
+                <option>Quad (4)</option>
+                <option>Five-box</option>
+                <option>Twin (2)</option>
+                <option>Single</option>
+              </select>
+            </div>
+            <div>
+              <label for="tail">Tail</label>
+              <select id="tail" name="tail">
+                <option>Squash</option>
+                <option>Round</option>
+                <option>Round Pin</option>
+                <option>Swallow</option>
+                <option>Fish</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid cols-2">
+            <div>
+              <label for="finish">Finish</label>
+              <select id="finish" name="finish">
+                <option>Sanded</option>
+                <option>Gloss & Polish</option>
+                <option>Matte</option>
+              </select>
+            </div>
+            <div>
+              <label for="color">Color / Artwork</label>
+              <input id="color" name="color" type="text" placeholder="e.g., Clear, Tint, Pinlines" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Rider -->
+        <fieldset>
+          <legend>Rider</legend>
+          <div class="grid cols-3">
+            <div>
+              <label for="riderWt">Weight (kg)</label>
+              <input id="riderWt" name="riderWt" type="number" min="30" max="150" step="1" />
+            </div>
+            <div>
+              <label for="riderHt">Height (cm)</label>
+              <input id="riderHt" name="riderHt" type="number" min="120" max="210" step="1" />
+            </div>
+            <div>
+              <label for="skill">Skill</label>
+              <select id="skill" name="skill">
+                <option>Beginner</option>
+                <option>Intermediate</option>
+                <option>Advanced</option>
+                <option>Pro</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid cols-2">
+            <div>
+              <label for="waves">Typical Waves</label>
+              <input id="waves" name="waves" type="text" placeholder="e.g., Beachbreak chest-high, fast point breaks" />
+            </div>
+            <div>
+              <label for="spot">Home Break</label>
+              <input id="spot" name="spot" type="text" placeholder="e.g., Oceanside, CA" />
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Notes / Files -->
+        <fieldset>
+          <legend>Notes & Reference</legend>
+          <div class="grid cols-2">
+            <div>
+              <label for="notes">Notes</label>
+              <textarea id="notes" name="notes" placeholder="Anything special: rail, rocker, logo placement, handle time…"></textarea>
+            </div>
+            <div>
+              <label for="refs">Upload reference image (optional)</label>
+              <input id="refs" name="refs" type="file" accept="image/*" />
+              <div class="hint">Screenshots of boards you like, outlines, etc.</div>
+            </div>
+          </div>
+          <label style="display:flex; gap:.6rem; align-items:center; margin-top:10px;">
+            <input type="checkbox" id="agree" required /> <span>I agree this is a request for a quote, not a final order.</span>
+          </label>
+        </fieldset>
+
+        <div class="actions">
+          <button class="primary" type="submit">Submit Request</button>
+          <button class="ghost" type="reset" onclick="resetVolume()">Reset</button>
+        </div>
+        <p class="hint" style="margin-top:8px">Volume estimate uses a simple bounding-box formula with a foil factor. It’s a helpful ballpark, not a guarantee.</p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // --- Volume calculator ---
+    // liters ≈ ( ( (ft*12 + in) * width_in * thickness_in ) * foilFactor ) * 0.0163871
+    const ids = ["lenFt","lenIn","width","thickness","foil"];
+    ids.forEach(id => document.getElementById(id).addEventListener("input", updateVolume));
+    window.addEventListener("DOMContentLoaded", updateVolume);
+
+    function getNumber(id){ return parseFloat(document.getElementById(id).value || "0"); }
+
+    function updateVolume(){
+      const ft = getNumber("lenFt");
+      const inch = getNumber("lenIn");
+      const width = getNumber("width");
+      const thick = getNumber("thickness");
+      const foil = parseFloat(document.getElementById("foil").value);
+
+      const lengthIn = (ft * 12) + inch;
+      const cubicIn = lengthIn * width * thick * foil;
+      const liters = cubicIn * 0.0163871; // 1 in³ = 0.0163871 L
+
+      document.getElementById("liters").textContent =
+        Number.isFinite(liters) && liters > 0 ? liters.toFixed(1) : "—";
+
+      document.getElementById("dimsBadge").textContent =
+        `${lengthIn.toFixed(1)}″ × ${width || "—"}″ × ${thick || "—"}″`;
+    }
+
+    function resetVolume(){
+      setTimeout(updateVolume, 0);
+    }
+
+    // --- Demo submit handler (replace with real backend or mailto) ---
+    function handleSubmit(e){
+      e.preventDefault();
+      const form = new FormData(e.target);
+      const data = Object.fromEntries(form.entries());
+      alert("Thanks! Your request has been recorded.\n\n" +
+            "Model: " + (data.model || "—") + "\n" +
+            "Dims: " + data.lenFt + "’" + data.lenIn + "″ × " + data.width + "″ × " + data.thickness + "″\n" +
+            "Est. Volume: " + document.getElementById("liters").textContent + " L\n\n" +
+            "We’ll email you shortly at " + (data.email || "—") + ".");
+      // For production: POST `data` to your server or integrate with Formspree/Netlify Forms/Airtable/etc.
+      e.target.reset();
+      resetVolume();
+    }
+  </script>
+  <footer>
+  <div class="header f2 my-text-color" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;padding:40px 0;text-align:center;align-items:center">
+    <div style="flex:1">
+      <h3 style="font-weight:700;letter-spacing:.2em;margin-bottom:8px">LOCATION</h3>
+      <p>San Diego, California</p>
+    </div>
+    <div style="flex:1">
+      <h3 style="font-weight:700;letter-spacing:.2ems;margin-bottom:8px">CONTACT</h3>
+      <p><a href="mailto:hello@ozk-surfboards.example">ozksurfboards@gmail.com</a></p>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center">
+      <h3 style="font-weight:700;letter-spacing:.2em;margin-bottom:8px">FOLLOW</h3>
+      <a href="https://www.instagram.com/p/DKWL51KReM5/" target="_blank" aria-label="Instagram" style="display:flex;align-items:center;justify-content:center">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+          <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2.2a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6ZM18 6.7a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

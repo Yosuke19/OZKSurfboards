@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OZK SURFBOARDS — OZK Mid</title>
+  <!-- Tailwind CDN for styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../style.cleaned.css" />
+
+  <style>
+    /* center page text */
+    main.container { text-align: center; }
+
+    .backlink {
+      display: inline-block;
+      margin: 14px auto 8px;
+      color: inherit;
+      text-decoration: underline;
+    }
+
+    /* grid centered as a whole */
+    .gallery-grid {
+      display: grid;
+      gap: 14px;
+      /* fixed card width; grid will wrap and stay centered */
+      grid-template-columns: repeat(auto-fit, minmax(220px, 220px));
+      justify-content: center;  /* center the grid itself */
+    }
+
+    .gallery-item {
+      border: 1px solid rgba(0,0,0,.1);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      width: 220px;             /* matches column width */
+    }
+
+    .gallery-item img {
+      display: block;           /* removes inline gap */
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      aspect-ratio: 1 / 1;
+    }
+  </style>
+</head>
+
+<body class="text-black min-h-screen">
+  <!-- ===== HEADER (kept) ===== -->
+  <header class="sticky top-0 header backdrop-blur border-b border-black/10">
+    <div class="max-w-6xl mx-auto flex justify-between items-center p-4">
+      <h1 class="font-bold text-xl">
+        <img src="../Images/Logos/OZK-Homepage-transparent.png" alt="ozksurfboards" width="250" height="150"/>
+      </h1>
+      <nav class="text-sm">
+        <ul class="flex space-x-9 f2 my-text-color">
+          <li><a href="../index.html" class="active">Home</a></li>
+          <li><a href="../models.html">Models</a></li>
+          <li><a href="../custom.html">Custom Order</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== MAIN ===== -->
+  <main class="f3" style="padding-top:60px;padding-bottom:48px">
+    <h1 class="text-3xl md:text-4xl mt-4 centered-text" style="margin-bottom:56px;line-height:1.2;">
+      OZK Mid
+    </h1>
+
+    <p class="max-w-[720px] mx-auto py-20 leading-relaxed">
+      The OZK Mid is all about timeless glide with a modern touch. A mid-length designed for smooth cruising yet still responsive underfoot, it’s the perfect balance between flow and control. With a versatile fin setup and refined bottom contours, the OZK Mid lets you draw long, stylish lines while keeping plenty of performance in reserve.
+      <br><br><strong>Key features:</strong><br><br>
+      • Mid-length design — effortless paddle power and glide for connecting sections with style.<br>
+      • 2+1 or single fin setup — classic single fin flow, or add side bites for a touch of extra control.<br>
+      • Smooth bottom concave — generates speed and delivers that silky, cruise-like sensation.<br>
+      • Responsive feel — stable and smooth, yet quick to react when you put it on rail.<br><br>
+      The OZK Mid is made for surfers chasing that magnificent glide — smooth, stylish, and endlessly fun across all conditions.
+    </p>
+
+    <!-- ===== Centered Gallery (click to open full size) ===== -->
+    <section class="gallery-grid" style="margin-top:50px">
+      <!-- Update paths to your real files; data-full is what opens in the lightbox -->
+      <a class="gallery-item"
+         href="../Images/Mid/OZK_Mid.png"
+         data-full="../Images/Mid/OZK_Mid.png">
+        <img src="../Images/Mid/OZK_Mid.png" alt="Mid 01">
+      </a>
+    </section>
+
+    <br>
+
+    <div style="display:flex;max-width:400px;margin:0 auto;text-align:center;padding-top:80px;padding-bottom:80px">
+      <p>
+        Surfboards from 6´0 up to 6´11 — starting price — <strong>$650</strong><br><br>
+        Surfboards from 7´0 up to 7´11 — starting price — <strong>$700</strong><br><br>
+        Surfboards from 8´0 up to 8´11 — starting price — <strong>$750</strong>
+      </p>
+    </div>
+
+    <div style="display:flex;max-width:700px;margin:0 auto;text-align:center;padding-top:20px;padding-bottom:80px">
+      <p>
+        All models require a deposit of 50% of the total amount when you place an order. By the time the order comes in and the deposit is confirmed, we’ll let you know how long it will take to build your surfboard.
+      </p>
+    </div>
+  </main>
+
+  <!-- ===== FOOTER (kept) ===== -->
+  <footer>
+    <div class="header f2 my-text-color" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;padding:40px 0;text-align:center;align-items:center">
+      <div style="flex:1">
+        <h3 style="font-weight:700;letter-spacing:.2em;margin-bottom:8px">LOCATION</h3>
+        <p>San Diego, California</p>
+      </div>
+      <div style="flex:1">
+        <h3 style="font-weight:700;letter-spacing:.2em;margin-bottom:8px">CONTACT</h3>
+        <p><a href="mailto:ozksurfboards@gmail.com">ozksurfboards@gmail.com</a></p>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center">
+        <h3 style="font-weight:700;letter-spacing:.2em;margin-bottom:8px">FOLLOW</h3>
+        <a href="https://www.instagram.com/p/DKWL51KReM5/" target="_blank" aria-label="Instagram" style="display:flex;align-items:center;justify-content:center">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
+            <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2.2a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6ZM18 6.7a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== Lightbox (no libraries) ===== -->
+  <div id="ozk-lightbox"
+       class="fixed inset-0 hidden items-center justify-center bg-black/80 z-50 p-4">
+    <button id="ozk-close"
+            class="absolute top-4 right-4 rounded-full bg-white/90 hover:bg-white px-3 py-1 text-sm font-medium">
+      Close ✕
+    </button>
+    <img id="ozk-img" src="" alt=""
+         class="max-w-[95vw] max-h-[90vh] object-contain rounded-lg shadow-2xl">
+  </div>
+
+  <script>
+    (function () {
+      const grid = document.querySelector('.gallery-grid');
+      const modal = document.getElementById('ozk-lightbox');
+      const modalImg = document.getElementById('ozk-img');
+      const closeBtn = document.getElementById('ozk-close');
+
+      if (!grid || !modal || !modalImg || !closeBtn) return;
+
+      grid.addEventListener('click', function (e) {
+        const a = e.target.closest('a.gallery-item');
+        if (!a) return;
+        e.preventDefault();
+
+        const full = a.getAttribute('data-full')
+          || a.getAttribute('href')
+          || (a.querySelector('img') ? a.querySelector('img').src : '');
+        if (!full) return;
+
+        modalImg.src = full;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        closeBtn.focus();
+      });
+
+      function closeModal() {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        modalImg.src = '';
+      }
+
+      closeBtn.addEventListener('click', closeModal);
+      modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
+      });
+    })();
+  </script>
+</body>
+</html>

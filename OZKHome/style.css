@@ -1,0 +1,199 @@
+/* Background texture */
+.background{
+      body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(180deg, #faf4ea 0%, #f6efe4 45%, #f3ebde 100%);
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image: radial-gradient(1200px 800px at 50% -10%, rgba(0,0,0,0.06), transparent 60%),
+                        radial-gradient(1000px 600px at -10% 50%, rgba(0,0,0,0.05), transparent 55%),
+                        radial-gradient(1000px 600px at 110% 50%, rgba(0,0,0,0.05), transparent 55%),
+                        radial-gradient(1200px 900px at 50% 110%, rgba(0,0,0,0.07), transparent 60%);
+      pointer-events: none;
+    }
+}
+.header {
+        background-color: #f4f6f8;
+}
+.my-text-color {
+  color: #060669; /* This sets the text color to blue using a hex code */
+}
+
+.large {
+  font-size: 3.2em;
+  padding: 60px 60px;
+}
+
+.centered-text {
+  text-align: center;
+}
+.left {
+  text-align: left
+}
+.flex-container-description {
+  display: flex; /* Enables flexbox for the container */
+  justify-content: center; /* Centers content horizontally */
+  align-items: center; /* Centers content vertically */
+  
+  max-width: 600px; /* Constrains the width of the container */
+  height: 200px; /* Example height for a visible container */
+  margin: 0 auto; /* Centers the container itself on the page */
+  border: 1px solid #ccc; /* For visualization */
+  
+  /* Use text-wrap: balance for short text to prevent uneven lines */
+  text-wrap: balance;
+  text-align: center; /* Ensures individual text lines are centered */
+}
+
+.container {
+  display: flex; /* Enables flexbox layout */
+  align-items: center; /* Vertically centers items if they have different heights */
+  justify-content: space-between; /* Pushes items to the ends with space in between */
+  max-width: 100px;
+}
+.f1 {
+  font-family: Arial, sans-serif; /* Specifies Arial as the primary, sans-serif as a fallback */
+}
+
+.f2 {
+  font-family: "Times New Roman", serif; /* Specifies Times New Roman, serif as a fallback */
+}
+
+.f3 {
+  font-family: "Calibri", serif; /* Specifies Times New Roman, serif as a fallback */
+}
+
+.f4 {
+  font-family: "Apple Chancery", serif; /* Specifies Times New Roman, serif as a fallback */
+}
+
+.f5 {
+  font-family: "Segoe Script", serif;/* Specifies Times New Roman, serif as a fallback */
+}
+
+/* Models page layout helpers */
+.models-grid {
+  gap: 24px;
+  grid-template-columns: repeat( auto-fill, minmax(220px, 1fr) );
+}
+
+/* Clickable model card */
+.model-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.model-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,.08);
+}
+
+/* Small tidy thumbnail */
+.model-thumb {
+  width: 100%;
+  aspect-ratio: 4 / 5;            /* tall board feel */
+  border: 1px solid rgba(0,0,0,.1);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+.model-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Text under each card */
+.model-meta h3 {
+  margin: 0 0 4px 0;
+  font-weight: 600;
+}
+.model-meta .muted {
+  color: var(--ink-70);
+  font-size: .95rem;
+  margin: 0;
+}
+
+
+/* --- Models page fixes --- */
+
+/* Ensure the main content stacks vertically */
+main.container { 
+  display: block;      /* override any global flex/grid on .container */
+}
+
+/* Keep the page title as its own block above the grid */
+.hero { 
+  display: block;
+  width: 100%;
+  margin: 24px 0 8px;
+}
+.h1 { display: block; }
+
+/* Only the models list should be a grid */
+.models-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+/* Safety if any floats exist */
+.hero::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+/* Core carousel */
+.carousel { position: relative; }
+.carousel-track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  border: 1px solid rgba(0,0,0,.1);
+  border-radius: 12px;
+  background: #fff;
+}
+.carousel-slide { flex: 0 0 100%; scroll-snap-align: center; }
+.ratio-box { width: 100%; aspect-ratio: 16/9; overflow: hidden; }
+.ratio-box img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Nav buttons */
+.carousel-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 40px; height: 40px; border-radius: 9999px;
+  border: 1px solid rgba(0,0,0,.2); background: rgba(255,255,255,.9);
+  display: grid; place-items: center; font-size: 22px; cursor: pointer;
+}
+.carousel-nav.prev { left: 8px; }
+.carousel-nav.next { right: 8px; }
+
+/* Thumbnail strip */
+.thumbs {
+  display: flex; gap: 10px; align-items: center;
+  overflow-x: auto; padding: 12px 2px 0; margin-top: 8px;
+}
+.thumbs button {
+  flex: 0 0 auto; width: 84px; height: 56px; border-radius: 8px;
+  border: 1px solid rgba(0,0,0,.15); overflow: hidden; padding: 0; cursor: pointer;
+  background: #fff; opacity: .7; transition: opacity .15s ease, outline-color .15s ease;
+}
+.thumbs button.active { opacity: 1; outline: 2px solid rgba(0,0,0,.6); }
+.thumbs img { width: 100%; height: 100%; object-fit: cover; }
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-track { scroll-behavior: auto; }
+}
