@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OZK SURFBOARDS</title>
+  <!-- Tailwind CDN for styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.cleaned.css" />
+  <style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .dot { width: 10px; height: 10px; border-radius: 9999px; }
+  </style>
+</head>
+<body class="text-black min-h-screen">
+
+  <!-- HEADER (kept) -->
+  <header class="sticky header top-0 z-50 ">
+    <div class="max-w-6xl mx-auto flex justify-between items-center p-4">
+      <h1 class="font-bold text-xl">
+        <img src="Images/Logos/OZK-Homepage-transparent.png" alt="ozksurfboards" width="250" height="150"/>
+      </h1>
+      <nav class="text-sm justify-content:center">
+        <ul class="flex space-x-9 f2 my-text-color">
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="models.html">Models</a></li>
+          <li><a href="custom.html">Custom Order</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="max-w-6xl mx-auto px-4">
+    <section class="hero py-8">
+      <h1 class="text-3xl md:text-4xl mt-4 f2 centered-text" style="margin-bottom:56px;line-height:1.2;">
+        HOME
+      </h1>
+
+      <!-- SIMPLE SWIPE CAROUSEL (no thumbnails, with dots) -->
+      <div id="heroCarousel" class="relative mx-auto max-w-4xl select-none">
+        <!-- Slides track -->
+        <div id="heroTrack"
+             class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar rounded-2xl ring-1 ring-black/10">
+          <!-- Each slide = full width panel -->
+          <div class="shrink-0 w-full aspect-[16/9] snap-center">
+            <img src="Images/Homepagepics/IMG_8969 2.jpg" alt="Slide 1" class="w-full h-full object-cover"/>
+          </div>
+          <div class="shrink-0 w-full aspect-[16/9] snap-center">
+            <img src="Images/Homepagepics/BlanksBoards.jpg" alt="Slide 2" class="w-full h-full object-cover"/>
+          </div>
+          <div class="shrink-0 w-full aspect-[16/9] snap-center">
+            <img src="Images/Homepagepics/HPHoldingside2.jpg" alt="Slide 3" class="w-full h-full object-cover"/>
+          </div>
+          <div class="shrink-0 w-full aspect-[16/9] snap-center">
+            <img src="Images/Homepagepics/Twoboards.PNG" alt="Slide 4" class="w-full h-full object-cover"/>
+          </div>
+          <div class="shrink-0 w-full aspect-[16/9] snap-center">
+            <img src="Images/Homepagepics/6BC3B55E-3A59-465D-8628-08D98D4D02FC.PNG" alt="Slide 5" class="w-full h-full object-cover"/>
+          </div>
+          <div class="shrink-0 w-full aspect-[16/9] snap-center">
+            <img src="Images/Twin/OZK_Twin_Pin3.JPG" alt="Slide 6" class="w-full h-full object-cover"/>
+          </div>
+          <div class="shrink-0 w-full aspect-[16/9] snap-center">
+            <img src="Images/sc/purple.JPG" alt="Slide 7" class="w-full h-full object-cover"/>
+          </div>
+          <div class="shrink-0 w-full aspect-[16/9] snap-center">
+            <img src="Images/Homepagepics/IMG_2871 2.JPG" alt="Slide 8" class="w-full h-full object-cover"/>
+          </div>
+        </div>
+
+        <!-- Prev/Next -->
+        <button id="heroPrev" aria-label="Previous"
+                class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white px-3 py-1.5 rounded-full ring-1 ring-black/10">
+          ‹
+        </button>
+        <button id="heroNext" aria-label="Next"
+                class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white px-3 py-1.5 rounded-full ring-1 ring-black/10">
+          ›
+        </button>
+
+        <!-- Dots -->
+        <div id="heroDots" class="flex items-center justify-center gap-2 mt-4" aria-label="Slide indicators"></div>
+      </div>
+
+      <!-- CTA buttons (kept) -->
+      <div class="mt-20 mb-12 flex justify-center gap-10 flex-wrap f2 my-text-color">
+        <a href="models.html" class="px-10 py-10 border-2 border-black/60">Explore Models</a>
+        <a href="custom.html" class="px-10 py-10 border-2 border-black/60">Custom Order</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER (kept) -->
+  <footer>
+    <div class="header f2 my-text-color"
+         style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;padding:40px 0;text-align:center;align-items:center">
+      <div style="flex:1">
+        <h3 style="font-weight:700;letter-spacing:.2em;margin-bottom:8px">LOCATION</h3>
+        <p>San Diego, California</p>
+      </div>
+      <div style="flex:1">
+        <h3 style="font-weight:700;letter-spacing:.2ems;margin-bottom:8px">CONTACT</h3>
+        <p><a href="mailto:ozksurfboards@gmail.com">ozksurfboards@gmail.com</a></p>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center">
+        <h3 style="font-weight:700;letter-spacing:.2em;margin-bottom:8px">FOLLOW</h3>
+        <a href="https://www.instagram.com/p/DKWL51KReM5/" target="_blank" aria-label="Instagram"
+           style="display:flex;align-items:center;justify-content:center">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+               fill="currentColor" width="28" height="28">
+            <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2.2a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6ZM18 6.7a1 1 0 1 1 0 2 1 0 0 1 0-2Z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT (no thumbnails; dots + swipe + arrows + keyboard) -->
+  <script>
+    (() => {
+      const track  = document.getElementById('heroTrack');
+      const slides = Array.from(track.children);
+      const prev   = document.getElementById('heroPrev');
+      const next   = document.getElementById('heroNext');
+      const dotsEl = document.getElementById('heroDots');
+      const carousel = document.getElementById('heroCarousel');
+
+      let index = 0;
+
+      // Build dots
+      const dots = slides.map((_, i) => {
+        const b = document.createElement('button');
+        b.className = 'dot bg-black/30 aria-selected:bg-black';
+        b.setAttribute('aria-label', `Go to slide ${i + 1}`);
+        b.addEventListener('click', () => goTo(i));
+        dotsEl.appendChild(b);
+        return b;
+      });
+
+      function setDotState() {
+        dots.forEach((d, i) => {
+          if (i === index) {
+            d.setAttribute('aria-selected', 'true');
+            d.style.opacity = '1';
+            d.style.transform = 'scale(1.1)';
+          } else {
+            d.removeAttribute('aria-selected');
+            d.style.opacity = '0.5';
+            d.style.transform = 'scale(1)';
+          }
+        });
+      }
+
+      function goTo(i) {
+        index = (i + slides.length) % slides.length;
+        slides[index].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        setDotState();
+      }
+
+      prev.addEventListener('click', () => goTo(index - 1));
+      next.addEventListener('click', () => goTo(index + 1));
+
+      // Sync while swiping/scrolling
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            index = slides.indexOf(e.target);
+            setDotState();
+          }
+        });
+      }, { root: track, threshold: 0.6 });
+
+      slides.forEach(s => io.observe(s));
+      setDotState();
+
+      // Keyboard arrows when carousel focused
+      carousel.tabIndex = 0;
+      carousel.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') goTo(index - 1);
+        if (e.key === 'ArrowRight') goTo(index + 1);
+      });
+
+      // Keep current slide centered after resize
+      window.addEventListener('resize', () => slides[index].scrollIntoView({ inline: 'center' }));
+    })();
+  </script>
+</body>
+</html>
