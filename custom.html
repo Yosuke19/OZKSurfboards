@@ -7,20 +7,6 @@
    <!-- Tailwind CDN for styling -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="style.cleaned.css" />
-</head>
-<body class="text-black min-h-screen">
-  <header class="sticky top-0 backdrop-blur border-b border-black/10 header">
-    <div class="max-w-6xl mx-auto flex justify-between items-center p-4">
-      <h1 class="font-bold text-xl"><img src="Images/Logos/OZK-Homepage-transparent.png" alt="ozksurfboards" width="250" height="150"/></h1>
-      <nav class="text-sm justify-content:center,">
-    <ul class="flex space-x-9 f2 my-text-color">
-    <li><a href="index.html" class="active">Home</a></li>
-    <li><a href="models.html">Models</a></li>
-    <li><a href="custom.html">Custom Order</a></li>
-  </ul>
-</nav>
-    </div>
-  </header>
   <style>
     :root { --bg:#f7f7f8; --card:#ffffff; --ink:#111; --muted:#6b7280; --accent:#0ea5e9; }
     * { box-sizing: border-box; }
@@ -53,7 +39,19 @@
     .req::after { content:" *"; color:#ef4444; }
   </style>
 </head>
-<body>
+<body class="text-black min-h-screen">
+  <header class="sticky top-0 backdrop-blur border-b border-black/10 header">
+    <div class="max-w-6xl mx-auto flex justify-between items-center p-4">
+      <h1 class="font-bold text-xl"><img src="Images/Logos/OZK-Homepage-transparent.png" alt="ozksurfboards" width="250" height="150"/></h1>
+      <nav class="text-sm justify-content:center,">
+    <ul class="flex space-x-9 f2 my-text-color">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="models.html">Models</a></li>
+    <li><a href="custom.html">Custom Order</a></li>
+  </ul>
+</nav>
+    </div>
+  </header>
   <section class="hero py-8 bg-white">
     <h1 class="text-3xl md:text-4xl mt-4 f2 centered-text" style="margin-bottom:56px;line-height:1.2;">
       Custom Surfboard Order
@@ -65,8 +63,8 @@
       <form id="orderForm"
       action="https://formspree.io/f/xwvpyrlj"
       method="POST"
-      enctype="multipart/form-data"
-      onsubmit="handleSubmit(event)">
+      enctype="multipart/form-data">
+
   <input type="hidden" name="_subject" value="New OZK Custom Order Request" />
         <!-- Contact -->
         <fieldset>
@@ -267,71 +265,101 @@
 
         <div class="actions">
     <button class="primary" type="submit">Submit Request</button>
-    <button class="ghost" type="reset" onclick="resetVolume()">Reset</button>
+    <button class="ghost" type="reset">Reset</button>
   </div>
 
   <p class="hint" style="margin-top:8px">
     Volume estimate uses a simple bounding-box formula with a foil factor. It’s a helpful ballpark, not a guarantee.
   </p>
-      </form>
+</form>
     </div>
   </div>
+</section>
+ <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("orderForm");
+  if (!form) {
+    console.error("orderForm not found");
+    return;
+  }
 
-  <script>
-    // --- Volume calculator ---
-    // liters ≈ ( ( (ft*12 + in) * width_in * thickness_in ) * foilFactor ) * 0.0163871
-    const ids = ["lenFt","lenIn","width","thickness","foil"];
-    ids.forEach(id => document.getElementById(id).addEventListener("input", updateVolume));
-    window.addEventListener("DOMContentLoaded", updateVolume);
+  // Optional: show status text under buttons
+  let statusEl = document.getElementById("status");
+  if (!statusEl) {
+    statusEl = document.createElement("p");
+    statusEl.id = "status";
+    statusEl.className = "hint";
+    statusEl.style.marginTop = "8px";
+    form.appendChild(statusEl);
+  }
 
-    function getNumber(id){ return parseFloat(document.getElementById(id).value || "0"); }
+  // --- Volume calculator (safe) ---
+  const ids = ["lenFt","lenIn","width","thickness","foil"];
 
-    function updateVolume(){
-      const ft = getNumber("lenFt");
-      const inch = getNumber("lenIn");
-      const width = getNumber("width");
-      const thick = getNumber("thickness");
-      const foil = parseFloat(document.getElementById("foil").value);
+  function getNumber(id){
+    const el = document.getElementById(id);
+    return el ? parseFloat(el.value || "0") : 0;
+  }
 
-      const lengthIn = (ft * 12) + inch;
-      const cubicIn = lengthIn * width * thick * foil;
-      const liters = cubicIn * 0.0163871; // 1 in³ = 0.0163871 L
+  function updateVolume(){
+    const litersEl = document.getElementById("liters");
+    const dimsEl = document.getElementById("dimsBadge");
+    const foilEl = document.getElementById("foil");
+    if (!litersEl || !dimsEl || !foilEl) return;
 
-      document.getElementById("liters").textContent =
-        Number.isFinite(liters) && liters > 0 ? liters.toFixed(1) : "—";
+    const ft = getNumber("lenFt");
+    const inch = getNumber("lenIn");
+    const width = getNumber("width");
+    const thick = getNumber("thickness");
+    const foil = parseFloat(foilEl.value);
 
-      document.getElementById("dimsBadge").textContent =
-        `${lengthIn.toFixed(1)}″ × ${width || "—"}″ × ${thick || "—"}″`;
-    }
+    const lengthIn = (ft * 12) + inch;
+    const cubicIn = lengthIn * width * thick * foil;
+    const liters = cubicIn * 0.0163871;
 
-    function resetVolume(){
-      setTimeout(updateVolume, 0);
-    }
+    litersEl.textContent = Number.isFinite(liters) && liters > 0 ? liters.toFixed(1) : "—";
+    dimsEl.textContent = `${lengthIn.toFixed(1)}″ × ${width || "—"}″ × ${thick || "—"}″`;
+  }
 
-    // --- Demo submit handler (replace with real backend or mailto) ---
-  async function handleSubmit(e) {
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("input", updateVolume);
+  });
+  updateVolume();
+
+  form.addEventListener("reset", () => setTimeout(updateVolume, 0));
+
+  // --- Submit handler ---
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const formEl = e.target;
-    const formData = new FormData(formEl);
+    // If required fields missing, force the browser to show what's missing
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    statusEl.textContent = "Sending…";
 
     try {
-      const res = await fetch(formEl.action, {
+      const res = await fetch(form.action, {
         method: "POST",
-        body: formData,
+        body: new FormData(form),
         headers: { "Accept": "application/json" }
       });
 
       if (!res.ok) throw new Error("Submit failed");
 
+      statusEl.textContent = "✅ Sent! Thanks — we’ll email you shortly.";
       alert("Thanks! Your request has been sent. We’ll email you shortly.");
-      formEl.reset();
-      resetVolume();
+      form.reset();
     } catch (err) {
       console.error(err);
+      statusEl.textContent = "❌ Couldn’t send. Please email ozksurfboards@gmail.com.";
       alert("Sorry—something went wrong. Please try again, or email ozksurfboards@gmail.com.");
     }
-  }
+  });
+});
 </script>
 
   <footer>
