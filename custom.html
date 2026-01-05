@@ -262,7 +262,7 @@
             </div>
           </div>
           <label style="display:flex; gap:.6rem; align-items:center; margin-top:10px;">
-            <input type="checkbox" id="agree" required /> <span>I agree this is a request for a quote, not a final order.</span>
+            <input type="checkbox" id="agree" name="agree" value="yes" required /> <span>I agree this is a request for a quote, not a final order.</span>
           </label>
         </fieldset>
 
@@ -307,20 +307,31 @@
     }
 
     // --- Demo submit handler (replace with real backend or mailto) ---
-    function handleSubmit(e){
-      e.preventDefault();
-      const form = new FormData(e.target);
-      const data = Object.fromEntries(form.entries());
-      alert("Thanks! Your request has been recorded.\n\n" +
-            "Model: " + (data.model || "—") + "\n" +
-            "Dims: " + data.lenFt + "’" + data.lenIn + "″ × " + data.width + "″ × " + data.thickness + "″\n" +
-            "Est. Volume: " + document.getElementById("liters").textContent + " L\n\n" +
-            "We’ll email you shortly at " + (data.email || "—") + ".");
-      // For production: POST `data` to your server or integrate with Formspree/Netlify Forms/Airtable/etc.
-      e.target.reset();
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    const formEl = e.target;
+    const formData = new FormData(formEl);
+
+    try {
+      const res = await fetch(formEl.action, {
+        method: "POST",
+        body: formData,
+        headers: { "Accept": "application/json" }
+      });
+
+      if (!res.ok) throw new Error("Submit failed");
+
+      alert("Thanks! Your request has been sent. We’ll email you shortly.");
+      formEl.reset();
       resetVolume();
+    } catch (err) {
+      console.error(err);
+      alert("Sorry—something went wrong. Please try again, or email ozksurfboards@gmail.com.");
     }
-  </script>
+  }
+</script>
+
   <footer>
   <div class="header f2 my-text-color" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px;padding:40px 0;text-align:center;align-items:center">
     <div style="flex:1">
