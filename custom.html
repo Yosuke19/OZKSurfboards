@@ -62,7 +62,13 @@
     <div class="card">
       <p class="sub">Fill this out to start your build. We’ll confirm specs, timeline, and price by email.</p>
 
-      <form id="orderForm" onsubmit="handleSubmit(event)">
+      <form id="orderForm"
+      action="https://form.jotform.com/260040471245143"
+      method="POST"
+      enctype="multipart/form-data"
+      onsubmit="handleSubmit(event)">
+  <input type="hidden" name="_subject" value="New OZK Custom Order Request" />
+    </form>
         <!-- Contact -->
         <fieldset>
           <legend>Contact</legend>
