@@ -44,6 +44,20 @@
         <div id="heroTrack"
              class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar rounded-2xl ring-1 ring-black/10">
           <!-- Each slide = full width panel -->
+        <!--Video section-->>
+            <div class="shrink-0 w-full aspect-[4/3] snap-center">
+
+            <video
+              class="w-full h-full object-cover"
+              muted
+              playsinline
+              loop
+              preload="metadata"
+            >
+          <source src="Images/Homepagepics/6Boards.MOV" type="video/mp4" />
+          </video>
+          </div>
+
           <div class="shrink-0 w-full aspect-[16/9] snap-center">
             <img src="Images/Homepagepics/IMG_8969 2.jpg" alt="Slide 1" class="w-full h-full object-cover"/>
           </div>
@@ -53,6 +67,7 @@
           <div class="shrink-0 w-full aspect-[16/9] snap-center">
             <img src="Images/Homepagepics/HPHoldingside2.jpg" alt="Slide 3" class="w-full h-full object-cover"/>
           </div>
+          
           <div class="shrink-0 w-full aspect-[16/9] snap-center">
             <img src="Images/Homepagepics/Twoboards.PNG" alt="Slide 4" class="w-full h-full object-cover"/>
           </div>
@@ -105,15 +120,29 @@
         <p><a href="mailto:ozksurfboards@gmail.com">ozksurfboards@gmail.com</a></p>
       </div>
       <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center">
-        <h3 style="font-weight:700;letter-spacing:.2em;margin-bottom:8px">FOLLOW</h3>
-        <a href="https://www.instagram.com/p/DKWL51KReM5/" target="_blank" aria-label="Instagram"
-           style="display:flex;align-items:center;justify-content:center">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-               fill="currentColor" width="28" height="28">
-            <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2.2a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6ZM18 6.7a1 1 0 1 1 0 2 1 0 0 1 0-2Z"/>
-          </svg>
-        </a>
-      </div>
+  <h3 style="font-weight:700;letter-spacing:.2em;margin-bottom:8px">FOLLOW</h3>
+
+  <div style="display:flex; gap:14px; align-items:center; justify-content:center">
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/ozksurfboards/" target="_blank" rel="noopener"
+       aria-label="Instagram" style="display:flex;align-items:center;justify-content:center">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+           fill="currentColor" width="28" height="28">
+        <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2.2a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6ZM18 6.7a1 1 0 1 1 0 2 1 0 0 1 0-2Z"/>
+      </svg>
+    </a>
+
+    <!-- YouTube -->
+    <a href="https://www.youtube.com/@ozksurfboards" target="_blank" rel="noopener"
+       aria-label="YouTube" style="display:flex;align-items:center;justify-content:center">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+           fill="currentColor" width="30" height="30">
+        <path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5A3 3 0 0 0 2.4 7.2 31.3 31.3 0 0 0 2 12a31.3 31.3 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1A31.3 31.3 0 0 0 22 12a31.3 31.3 0 0 0-.4-4.8ZM10 15.3V8.7L15.7 12 10 15.3Z"/>
+      </svg>
+    </a>
+  </div>
+</div>
+
     </div>
   </footer>
 
@@ -152,12 +181,29 @@
           }
         });
       }
+      function pauseAllVideos() {
+  slides.forEach(slide => {
+    const v = slide.querySelector('video');
+    if (v) v.pause();
+  });
+}
+
+async function playVideoIfAny(i) {
+  pauseAllVideos();
+  const v = slides[i]?.querySelector('video');
+  if (v) {
+    try { await v.play(); } catch (_) {}
+  }
+}
+
 
       function goTo(i) {
-        index = (i + slides.length) % slides.length;
-        slides[index].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-        setDotState();
-      }
+  index = (i + slides.length) % slides.length;
+  slides[index].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  setDotState();
+  playVideoIfAny(index);
+}
+
 
       prev.addEventListener('click', () => goTo(index - 1));
       next.addEventListener('click', () => goTo(index + 1));
@@ -166,14 +212,18 @@
       const io = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) {
-            index = slides.indexOf(e.target);
-            setDotState();
-          }
+  index = slides.indexOf(e.target);
+  setDotState();
+  playVideoIfAny(index);
+}
+
         });
       }, { root: track, threshold: 0.6 });
 
       slides.forEach(s => io.observe(s));
-      setDotState();
+setDotState();
+playVideoIfAny(index);
+
 
       // Keyboard arrows when carousel focused
       carousel.tabIndex = 0;
