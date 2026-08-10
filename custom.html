@@ -112,7 +112,7 @@
               <label for="construction">Construction</label>
               <select id="construction" name="construction">
                 <option>PU/Poly</option>
-                <option>EPS/Epoxy</option>
+                <option>EPS/Epoxy (+$100)</option>
               </select>
             </div>
           </div>
@@ -150,13 +150,13 @@
             <div>
               <label for="foil">Foil / Shape Factor</label>
               <select id="foil" name="foil">
-                <option value="0.55">HP (0.55)</option>
-                <option value="0.58" selected>SD (0.58)</option>
-                <option value="0.58">SC (0.58)</option>
-                <option value="0.55">La Jolla (0.55)</option>
-                <option value="0.58">RN (0.58)</option>
-                <option value="0.55">Asym (0.55)</option>
-                <option value="0.62">Mid (0.62)</option>
+                <option value="0.53571">HP</option>
+                <option value="0.55363" selected>SD</option>
+                <option value="0.545">SC</option>
+                <option value="0.535">La Jolla</option>
+                <option value="0.575">RN</option>
+                <option value="0.55">Asym</option>
+                <option value="0.57534">Mid</option>
               </select>
               <div class="hint">Used only for the volume estimate.</div>
             </div>
@@ -182,7 +182,7 @@
                 <option>2+1</option>
               </select>
             </div>
-            <div>
+            <div id="tailField">
               <label for="tail">Tail</label>
               <select id="tail" name="tail">
                 <option>Squash</option>
@@ -191,6 +191,7 @@
                 <option>Swallow</option>
                 <option>Fish</option>
               </select>
+              <div class="hint">Available for HP, Mid, RN, and Asym models.</div>
             </div>
           </div>
 
@@ -199,14 +200,63 @@
               <label for="finish">Finish</label>
               <select id="finish" name="finish">
                 <option>Sanded</option>
-                <option>Gloss & Polish</option>
+                <option>Gloss & Polish (+$150)</option>
                 <option>Matte</option>
               </select>
             </div>
             <div>
               <label for="color">Color / Artwork</label>
               <input id="color" name="color" type="text" placeholder="e.g., Clear, Tint, Pinlines" />
+
+              <label for="colorArtworkRefs" style="margin-top:10px;">Attach Color / Artwork Images</label>
+              <input id="colorArtworkRefs" name="colorArtworkRefs[]" type="file" accept="image/*" multiple />
+              <div class="hint">Upload reference images for colors, artwork, patterns, or logo placement.</div>
             </div>
+          </div>
+
+          <div class="grid cols-2">
+            <div>
+              <label for="carbonTailPatch">Carbon Tail Patch</label>
+              <select id="carbonTailPatch" name="carbonTailPatch">
+                <option>No</option>
+                <option>Yes (+$30)</option>
+              </select>
+              <div class="hint">Optional carbon reinforcement on the tail area.</div>
+            </div>
+          </div>
+
+          <div class="grid cols-2">
+            <div>
+              <label for="additionalWing">Additional Wing</label>
+              <select id="additionalWing" name="additionalWing">
+                <option>No</option>
+                <option>Yes (+$50)</option>
+              </select>
+              <div class="hint">Optional additional wing in the tail outline.</div>
+            </div>
+            <div>
+              <label for="channels">Channels</label>
+              <select id="channels" name="channels">
+                <option>No</option>
+                <option>Yes (+$90)</option>
+              </select>
+              <div class="hint">Optional bottom channels.</div>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- Estimated Price -->
+        <fieldset>
+          <legend>Estimated Price</legend>
+          <div class="total">
+            <div>
+              <div class="hint">Estimated Custom Board Price</div>
+              <div class="big">$<span id="estimatedPrice">—</span></div>
+              <div class="hint" id="priceBreakdown">Select a model and board size to see an estimate.</div>
+            </div>
+          </div>
+          <div class="hint" style="margin-top:8px">
+            Estimate is based on model, board length, construction, finish, and selected options. Final price will be confirmed before the build.
           </div>
         </fieldset>
 
@@ -295,7 +345,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- Volume calculator (safe) ---
-  const ids = ["lenFt","lenIn","width","thickness","foil"];
+  const ids = ["lenFt","lenIn","width","thickness","foil","model","construction","finish","carbonTailPatch","additionalWing","channels"];
 
   function getNumber(id){
     const el = document.getElementById(id);
@@ -322,13 +372,143 @@ document.addEventListener("DOMContentLoaded", () => {
     dimsEl.textContent = `${lengthIn.toFixed(1)}″ × ${width || "—"}″ × ${thick || "—"}″`;
   }
 
+  function getBasePrice(model, lengthIn) {
+    if (!model || !Number.isFinite(lengthIn) || lengthIn <= 0) return null;
+
+    // Length tiers:
+    // under 6'0" (<72"), 6'0"-6'11" (72-83"), 7'0"-7'11" (84-95"), 8'0"-9'0" (96-108")
+    let tier;
+    if (lengthIn < 72) tier = "under6";
+    else if (lengthIn < 84) tier = "6to611";
+    else if (lengthIn < 96) tier = "7to711";
+    else if (lengthIn <= 108) tier = "8to9";
+    else return null;
+
+    const hpRn = {
+      under6: 600,
+      "6to611": 650,
+      "7to711": 700,
+      "8to9": 750
+    };
+
+    const sdFamily = {
+      under6: 650,
+      "6to611": 700,
+      "7to711": 750,
+      "8to9": 800
+    };
+
+    const mid = {
+      "6to611": 800,
+      "7to711": 850,
+      "8to9": 900
+    };
+
+    if (model === "HP" || model === "RN") return hpRn[tier] ?? null;
+    if (["SD","SC","La Jolla","Asym"].includes(model)) return sdFamily[tier] ?? null;
+    if (model === "Mid") return mid[tier] ?? null;
+
+    return null;
+  }
+
+
+  function updateTailAvailability() {
+    const modelEl = document.getElementById("model");
+    const tailField = document.getElementById("tailField");
+    const tailEl = document.getElementById("tail");
+    if (!modelEl || !tailField || !tailEl) return;
+
+    const allowedModels = ["HP", "Mid", "RN", "Asym"];
+    const isAllowed = allowedModels.includes(modelEl.value);
+
+    tailField.style.display = isAllowed ? "" : "none";
+    tailEl.disabled = !isAllowed;
+  }
+
+  function updatePrice() {
+    const priceEl = document.getElementById("estimatedPrice");
+    const breakdownEl = document.getElementById("priceBreakdown");
+    const modelEl = document.getElementById("model");
+    const constructionEl = document.getElementById("construction");
+    const finishEl = document.getElementById("finish");
+    const carbonEl = document.getElementById("carbonTailPatch");
+    const wingEl = document.getElementById("additionalWing");
+    const channelsEl = document.getElementById("channels");
+
+    if (!priceEl || !breakdownEl || !modelEl) return;
+
+    const lengthIn = (getNumber("lenFt") * 12) + getNumber("lenIn");
+    const model = modelEl.value;
+    const base = getBasePrice(model, lengthIn);
+
+    if (base === null) {
+      priceEl.textContent = "—";
+      if (model === "Mid" && lengthIn > 0 && lengthIn < 72) {
+        breakdownEl.textContent = "Mid pricing starts at 6′0″.";
+      } else if (lengthIn > 108) {
+        breakdownEl.textContent = "Please contact OZK for boards over 9′0″.";
+      } else {
+        breakdownEl.textContent = "Select a model and supported board length to see an estimate.";
+      }
+      return;
+    }
+
+    let total = base;
+    const additions = [];
+
+    if (constructionEl && constructionEl.value.includes("EPS/Epoxy")) {
+      total += 100;
+      additions.push("EPS +$100");
+    }
+
+    if (finishEl && finishEl.value.includes("Gloss & Polish")) {
+      total += 150;
+      additions.push("Gloss +$150");
+    }
+
+    if (carbonEl && carbonEl.value.startsWith("Yes")) {
+      total += 30;
+      additions.push("Carbon tail patch +$30");
+    }
+
+    if (wingEl && wingEl.value.startsWith("Yes")) {
+      total += 50;
+      additions.push("Additional wing +$50");
+    }
+
+    if (channelsEl && channelsEl.value.startsWith("Yes")) {
+      total += 90;
+      additions.push("Channels +$90");
+    }
+
+    priceEl.textContent = total.toFixed(0);
+    breakdownEl.textContent = `Base ${model}: $${base}` + (additions.length ? ` + ${additions.join(" + ")}` : "");
+  }
+
   ids.forEach(id => {
     const el = document.getElementById(id);
-    if (el) el.addEventListener("input", updateVolume);
+    if (el) {
+      el.addEventListener("input", () => {
+        updateVolume();
+        updatePrice();
+        updateTailAvailability();
+      });
+      el.addEventListener("change", () => {
+        updateVolume();
+        updatePrice();
+        updateTailAvailability();
+      });
+    }
   });
   updateVolume();
+  updatePrice();
+  updateTailAvailability();
 
-  form.addEventListener("reset", () => setTimeout(updateVolume, 0));
+  form.addEventListener("reset", () => setTimeout(() => {
+    updateVolume();
+    updatePrice();
+    updateTailAvailability();
+  }, 0));
 
   // --- Submit handler ---
   form.addEventListener("submit", async (e) => {
